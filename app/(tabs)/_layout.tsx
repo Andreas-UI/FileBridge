@@ -7,12 +7,13 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
+        headerTitleAlign: "center",
+        title: "FileBridge",
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
           tabBarIcon: ({ color }) => (
             <Icon as={LayoutDashboard} color={color} />
           ),
@@ -21,21 +22,18 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="(folders)"
         options={{
-          title: "Folders",
           tabBarIcon: ({ color }) => <Icon as={Files} color={color} />,
         }}
       />
       <Tabs.Screen
         name="(scan)"
         options={{
-          title: "Scan",
           tabBarIcon: ({ color }) => <Icon as={ScanQrCode} color={color} />,
         }}
       />
       <Tabs.Screen
         name="(profile)"
         options={{
-          title: "Profile",
           tabBarIcon: ({ color }) => <Icon as={User} color={color} />,
         }}
       />

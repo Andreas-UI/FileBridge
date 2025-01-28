@@ -1,6 +1,8 @@
 import { CreateFolderFAB } from "@/components/createFolderFAB";
 import { CreateFolderModal } from "@/components/createFolderModal";
 import { FolderItem } from "@/components/folderItem";
+import { TierCard } from "@/components/tierCard";
+import { TierCardModal } from "@/components/tierCardModal";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { foldersDummyData } from "@/dummy_data/folders";
@@ -22,6 +24,9 @@ export default function Index() {
   const dispatch = useDispatch();
 
   const foldersData = useSelector((state: RootState) => state.folders).folders;
+  const total_folders = useSelector(
+    (state: RootState) => state.folders
+  ).total_folders;
   const isMultiSelect = useSelector(
     (state: RootState) => state.folders
   ).isMultiSelect;
@@ -69,6 +74,7 @@ export default function Index() {
         <Text className="font-light" size="3xl">
           Folders
         </Text>
+        <TierCard />
         <Text className="font-medium" size="md">
           Sort by: Date
         </Text>
@@ -80,7 +86,7 @@ export default function Index() {
               className="font-normal text-center text-typography-500"
               size="sm"
             >
-              2 folders left
+              {`${10 - total_folders} folders left`}
             </Text>
           }
           keyExtractor={(item) => item.id}
@@ -99,8 +105,17 @@ export default function Index() {
           )}
         />
       </View>
-      {!isMultiSelect && <CreateFolderFAB />}
-      <CreateFolderModal />
+
+      {/* Create New Folder Components */}
+      {!isMultiSelect && total_folders < 10 && (
+        <>
+          <CreateFolderFAB />
+          <CreateFolderModal />
+        </>
+      )}
+
+      {/* Tier Card Components */}
+      <TierCardModal />
     </>
   );
 }

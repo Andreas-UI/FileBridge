@@ -31,6 +31,7 @@ export const foldersSlice = createSlice({
   reducers: {
     clearFolders: (state) => {
       state.folders = [];
+      state.total_folders = 0
     },
     addFolder: (state, action: PayloadAction<Folder>) => {
       state.folders.push(action.payload);

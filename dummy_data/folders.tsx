@@ -82,13 +82,13 @@ export const foldersDummyData: FolderType[] = [
     file_count: 10,
     is_selected: false,
   },
-  {
-    id: "10",
-    subject: "Training Material - Sales Team",
-    description: "Training modules for the sales team.",
-    created_date: "25/01/2025",
-    last_modified: "15/02/2025",
-    file_count: 9,
-    is_selected: false,
-  },
+  // {
+  //   id: "10",
+  //   subject: "Training Material - Sales Team",
+  //   description: "Training modules for the sales team.",
+  //   created_date: "25/01/2025",
+  //   last_modified: "15/02/2025",
+  //   file_count: 9,
+  //   is_selected: false,
+  // },
 ];

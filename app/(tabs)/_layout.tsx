@@ -53,6 +53,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="(profile)"
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Icon
               as={User}

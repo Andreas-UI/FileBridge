@@ -110,7 +110,7 @@ export const FolderItem = ({
     <GestureDetector gesture={Gesture.Exclusive(singleTap, longPress)}>
       <Animated.View style={[listContainerAnimatedStyle]}>
         <HStack className="flex w-full gap-4 items-center py-2">
-          <Folder size={26} color={"#000000"} />
+          <Folder size={26} color={"#535252"} />
           <VStack className="flex-1">
             <Text className="font-medium text-black" size="md">
               {subject}
@@ -122,13 +122,13 @@ export const FolderItem = ({
             </HStack>
           </VStack>
 
-          {!isMultiSelect && <ChevronRight size={26} color={"#000000"} />}
+          {!isMultiSelect && <ChevronRight size={26} color={"#535252"} />}
           <Animated.View style={[iconScaleAnimatedStyle]}>
             {isMultiSelect &&
               (is_selected ? (
-                <CircleCheck size={26} color={"#000000"} />
+                <CircleCheck size={26} color={"#535252"} />
               ) : (
-                <Circle size={26} color={"#000000"} />
+                <Circle size={26} color={"#535252"} />
               ))}
           </Animated.View>
         </HStack>

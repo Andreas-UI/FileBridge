@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 
 export default function Index() {
+  // const backgroundColor
   return (
     <View
       style={{
@@ -8,8 +9,9 @@ export default function Index() {
         justifyContent: "center",
         alignItems: "center",
       }}
+      className="bg-background-0"
     >
-      <Text>Profile Screen</Text>
+      <Text>Coming Soon...</Text>
     </View>
   );
 }

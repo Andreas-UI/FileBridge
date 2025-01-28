@@ -70,7 +70,7 @@ export default function Index() {
           },
         }}
       />
-      <View style={styles.view}>
+      <View style={styles.view} className="bg-background-0">
         <Text className="font-light" size="3xl">
           Folders
         </Text>
@@ -126,6 +126,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 24,
     gap: 16,
-    backgroundColor: "white",
   },
 });

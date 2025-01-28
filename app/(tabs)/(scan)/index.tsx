@@ -4,6 +4,8 @@ import { StyleSheet, View } from "react-native";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Center } from "@/components/ui/center";
+import React from "react";
+import { Stack } from "expo-router";
 
 export default function Index() {
   const [facing, setFacing] = useState<CameraType>("back");
@@ -17,7 +19,7 @@ export default function Index() {
   if (!permission.granted) {
     // Camera permissions are not granted yet.
     return (
-      <Center className="h-full" >
+      <Center className="h-full">
         <Text style={styles.message}>
           We need your permission to show the camera
         </Text>
@@ -33,22 +35,29 @@ export default function Index() {
   }
 
   return (
-    <View style={styles.container}>
-      <CameraView
-        style={styles.camera}
-        facing={facing}
-        barcodeScannerSettings={{
-          barcodeTypes: ["qr"],
+    <>
+      <Stack.Screen
+        options={{
+          headerTintColor: "white",
         }}
-        onBarcodeScanned={(props) => console.log(props)}
-      >
-        <View style={styles.buttonContainer}>
-          <Button style={styles.button}>
-            <ButtonText>Upload QR</ButtonText>
-          </Button>
-        </View>
-      </CameraView>
-    </View>
+      />
+      <View style={styles.container}>
+        <CameraView
+          style={styles.camera}
+          facing={facing}
+          barcodeScannerSettings={{
+            barcodeTypes: ["qr"],
+          }}
+          onBarcodeScanned={(props) => console.log(props)}
+        >
+          <View style={styles.buttonContainer}>
+            <Button style={styles.button}>
+              <ButtonText>Upload QR</ButtonText>
+            </Button>
+          </View>
+        </CameraView>
+      </View>
+    </>
   );
 }
 

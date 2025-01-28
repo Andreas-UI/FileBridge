@@ -9,13 +9,13 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function RootLayout() {
   return (
     <GluestackUIProvider mode="light">
-      <Provider store={store}>
-        <GestureHandlerRootView>
+      <GestureHandlerRootView>
+        <Provider store={store}>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
-        </GestureHandlerRootView>
-      </Provider>
+        </Provider>
+      </GestureHandlerRootView>
     </GluestackUIProvider>
   );
 }

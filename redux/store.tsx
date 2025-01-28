@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createFolderModalReducer from "./slice/createFolderModalSlice";
+import foldersReducer from "./slice/foldersSlice";
 
 // Configure the store
 export const store = configureStore({
   reducer: {
     createFolderModal: createFolderModalReducer,
+    folders: foldersReducer,
   },
 });
 

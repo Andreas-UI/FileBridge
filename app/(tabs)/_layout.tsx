@@ -1,7 +1,6 @@
 import { Icon } from "@/components/ui/icon";
 import { Tabs } from "expo-router";
 import { Files, LayoutDashboard, ScanQrCode, User } from "lucide-react-native";
-import { Easing } from "react-native-reanimated";
 
 export default function TabsLayout() {
   return (
@@ -28,6 +27,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="(folders)"
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Icon
               as={Files}
@@ -40,8 +40,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="(scan)"
         options={{
-          headerTransparent: true,
-          headerTintColor: "white",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Icon
               as={ScanQrCode}

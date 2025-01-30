@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { Fab, FabIcon, FabLabel } from "./ui/fab";
+import { Fab, FabIcon, FabLabel } from "../ui/fab";
 import { openCreateFolderModal } from "@/redux/slice/createFolderModalSlice";
-import { AddIcon } from "./ui/icon";
+import { AddIcon } from "../ui/icon";
 
 export const CreateFolderFAB = () => {
   const dispatch = useDispatch();

@@ -4,7 +4,11 @@ import {
   selectFolder,
 } from "@/redux/slice/foldersSlice";
 import { RootState } from "@/redux/store";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import {
+  Gesture,
+  GestureDetector,
+  Pressable,
+} from "react-native-gesture-handler";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -16,16 +20,17 @@ import { HStack } from "./ui/hstack";
 import { ChevronRight, Circle, CircleCheck, Folder } from "lucide-react-native";
 import { VStack } from "./ui/vstack";
 import { Text } from "./ui/text";
+import { useRouter } from "expo-router";
 
 export const FolderItem = ({
   is_selected,
   id,
   subject,
-  description,
-  created_date,
   last_modified,
   file_count,
-}: FolderType) => {
+}: Omit<FolderType, "description" | "created_date" | "files">) => {
+  const router = useRouter();
+
   const dispatch = useDispatch();
   const isMultiSelect = useSelector(
     (state: RootState) => state.folders
@@ -109,29 +114,40 @@ export const FolderItem = ({
   return (
     <GestureDetector gesture={Gesture.Exclusive(singleTap, longPress)}>
       <Animated.View style={[listContainerAnimatedStyle]}>
-        <HStack className="flex w-full gap-4 items-center py-2">
-          <Folder size={26} color={"#535252"} />
-          <VStack className="flex-1">
-            <Text className="font-medium text-black" size="md">
-              {subject}
-            </Text>
-            <HStack space="sm">
-              <Text>{last_modified}</Text>
-              <Text>|</Text>
-              <Text>{`${file_count} items`}</Text>
-            </HStack>
-          </VStack>
+        <Pressable
+          onPress={() => {
+            if (!isMultiSelect) {
+              router.push({
+                pathname: "/folder/[id]",
+                params: { id: id },
+              });
+            }
+          }}
+        >
+          <HStack className="flex w-full gap-4 items-center py-2">
+            <Folder size={26} color={"#535252"} />
+            <VStack className="flex-1">
+              <Text className="font-medium text-black" size="md">
+                {subject}
+              </Text>
+              <HStack space="sm">
+                <Text>{last_modified}</Text>
+                <Text>|</Text>
+                <Text>{`${file_count} items`}</Text>
+              </HStack>
+            </VStack>
 
-          {!isMultiSelect && <ChevronRight size={26} color={"#535252"} />}
-          <Animated.View style={[iconScaleAnimatedStyle]}>
-            {isMultiSelect &&
-              (is_selected ? (
-                <CircleCheck size={26} color={"#535252"} />
-              ) : (
-                <Circle size={26} color={"#535252"} />
-              ))}
-          </Animated.View>
-        </HStack>
+            {!isMultiSelect && <ChevronRight size={26} color={"#535252"} />}
+            <Animated.View style={[iconScaleAnimatedStyle]}>
+              {isMultiSelect &&
+                (is_selected ? (
+                  <CircleCheck size={26} color={"#535252"} />
+                ) : (
+                  <Circle size={26} color={"#535252"} />
+                ))}
+            </Animated.View>
+          </HStack>
+        </Pressable>
       </Animated.View>
     </GestureDetector>
   );

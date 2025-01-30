@@ -8,21 +8,21 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "./ui/modal";
+} from "../ui/modal";
 import { closeCreateFolderModal } from "@/redux/slice/createFolderModalSlice";
-import { Heading } from "./ui/heading";
-import { CloseIcon, Icon } from "./ui/icon";
-import { VStack } from "./ui/vstack";
+import { Heading } from "../ui/heading";
+import { CloseIcon, Icon } from "../ui/icon";
+import { VStack } from "../ui/vstack";
 import {
   FormControl,
   FormControlHelper,
   FormControlHelperText,
   FormControlLabel,
   FormControlLabelText,
-} from "./ui/form-control";
-import { Input, InputField } from "./ui/input";
-import { Textarea, TextareaInput } from "./ui/textarea";
-import { Button, ButtonText } from "./ui/button";
+} from "../ui/form-control";
+import { Input, InputField } from "../ui/input";
+import { Textarea, TextareaInput } from "../ui/textarea";
+import { Button, ButtonText } from "../ui/button";
 
 export const CreateFolderModal = () => {
   const dispatch = useDispatch();

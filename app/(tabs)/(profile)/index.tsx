@@ -1,7 +1,6 @@
 import { Text, View } from "react-native";
 
 export default function Index() {
-  // const backgroundColor
   return (
     <View
       style={{

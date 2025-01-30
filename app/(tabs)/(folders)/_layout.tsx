@@ -11,6 +11,14 @@ export default function FoldersLayout() {
           title: "FileBridge",
         }}
       />
+      <Stack.Screen
+        name="folder/[id]"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          title: "FileBridge",
+        }}
+      />
     </Stack>
   );
 }

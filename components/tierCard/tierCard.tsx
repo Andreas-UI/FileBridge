@@ -1,9 +1,9 @@
-import { Card } from "./ui/card";
-import { Heading } from "./ui/heading";
-import { HStack } from "./ui/hstack";
-import { VStack } from "./ui/vstack";
-import { Text } from "./ui/text";
-import { Button, ButtonText } from "./ui/button";
+import { Card } from "../ui/card";
+import { Heading } from "../ui/heading";
+import { HStack } from "../ui/hstack";
+import { VStack } from "../ui/vstack";
+import { Text } from "../ui/text";
+import { Button, ButtonText } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { openTierCardModal } from "@/redux/slice/tierCardModalSlice";

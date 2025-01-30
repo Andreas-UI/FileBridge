@@ -1,8 +1,8 @@
-import { CreateFolderFAB } from "@/components/createFolderFAB";
-import { CreateFolderModal } from "@/components/createFolderModal";
+import { CreateFolderFAB } from "@/components/createFolder/createFolderFAB";
+import { CreateFolderModal } from "@/components/createFolder/createFolderModal";
 import { FolderItem } from "@/components/folderItem";
-import { TierCard } from "@/components/tierCard";
-import { TierCardModal } from "@/components/tierCardModal";
+import { TierCard } from "@/components/tierCard/tierCard";
+import { TierCardModal } from "@/components/tierCard/tierCardModal";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { foldersDummyData } from "@/dummy_data/folders";
@@ -83,7 +83,7 @@ export default function Index() {
           estimatedItemSize={10}
           ListFooterComponent={
             <Text
-              className="font-normal text-center text-typography-500"
+              className="font-normal text-center text-typography-500 mb-10"
               size="sm"
             >
               {`${10 - total_folders} folders left`}
@@ -94,8 +94,6 @@ export default function Index() {
           renderItem={({ item }) => (
             <FolderItem
               id={item.id}
-              created_date={item.created_date}
-              description={item.description}
               file_count={item.file_count}
               is_selected={item.is_selected}
               last_modified={item.last_modified}

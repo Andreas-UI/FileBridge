@@ -1,6 +1,6 @@
-import { Button, ButtonText } from "./ui/button";
-import { CloseIcon, Icon } from "./ui/icon";
-import { Text } from "./ui/text";
+import { Button, ButtonText } from "../ui/button";
+import { CloseIcon, Icon } from "../ui/icon";
+import { Text } from "../ui/text";
 import {
   Modal,
   ModalBackdrop,
@@ -9,11 +9,11 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "./ui/modal";
+} from "../ui/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { closeTierCardModal } from "@/redux/slice/tierCardModalSlice";
-import { Heading } from "./ui/heading";
+import { Heading } from "../ui/heading";
 
 export const TierCardModal = () => {
   const dispatch = useDispatch();

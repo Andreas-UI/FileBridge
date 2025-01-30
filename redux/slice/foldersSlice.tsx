@@ -1,5 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface File {
+  id: string;
+  file_name: string;
+  upload_date: string;
+  size_kb: number;
+  mime_type: string;
+}
+
 export interface Folder {
   // Multiselect
   is_selected: boolean;
@@ -11,6 +19,7 @@ export interface Folder {
   created_date: string;
   last_modified: string;
   file_count: number;
+  files: File[];
 }
 
 export interface foldersState {
@@ -31,7 +40,7 @@ export const foldersSlice = createSlice({
   reducers: {
     clearFolders: (state) => {
       state.folders = [];
-      state.total_folders = 0
+      state.total_folders = 0;
     },
     addFolder: (state, action: PayloadAction<Folder>) => {
       state.folders.push(action.payload);

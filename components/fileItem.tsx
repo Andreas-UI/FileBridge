@@ -1,7 +1,6 @@
 import { File } from "@/redux/slice/foldersSlice";
 import { Pressable } from "react-native-gesture-handler";
 import { HStack } from "./ui/hstack";
-import { Folder } from "lucide-react-native";
 import { VStack } from "./ui/vstack";
 import { Text } from "./ui/text";
 import { formatkB } from "@/utils/formatkB";

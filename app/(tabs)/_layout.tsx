@@ -15,6 +15,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Icon
               as={LayoutDashboard}

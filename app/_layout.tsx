@@ -45,6 +45,12 @@ export default function RootLayout() {
                   title: "FileBridge",
                 }}
               />
+              <Stack.Screen
+                name="auth/index"
+                options={{
+                  headerShown: false,
+                }}
+              />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
           </Provider>

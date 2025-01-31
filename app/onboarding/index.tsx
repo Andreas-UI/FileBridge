@@ -11,6 +11,10 @@ const { width, height } = Dimensions.get("window");
 export default function OnboardingScreen() {
   const router = useRouter();
 
+  const handlePostOnboarding = () => {
+    router.replace("/auth");
+  };
+
   return (
     <View style={styles.container}>
       <Onboarding
@@ -80,14 +84,14 @@ export default function OnboardingScreen() {
             subtitle: (
               <View
                 style={{
-                  width: width - 32,
-                  gap: 12
+                  width: width - 56,
+                  gap: 12,
                 }}
               >
                 <Text size="lg" className="text-wrap text-center">
                   Create your first QR code and send files in seconds!
                 </Text>
-                <Button size="xl">
+                <Button size="md" onPress={handlePostOnboarding}>
                   <ButtonText>Start Now</ButtonText>
                 </Button>
               </View>

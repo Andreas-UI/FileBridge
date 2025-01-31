@@ -75,6 +75,7 @@ export default function Index() {
           Folders
         </Text>
         <TierCard />
+        {/* TODO:: Make this workable */}
         <Text className="font-medium" size="md">
           Sort by: Date
         </Text>

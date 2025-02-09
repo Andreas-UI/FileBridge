@@ -13,12 +13,18 @@ import { Input, InputField } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useRouter } from "expo-router";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function AuthScreen() {
   const router = useRouter();
 
-  const handleLogIn = () => {
+  const allowOath = false;
+  const allowEmailPassword = false;
+  const allowMagicLink = true;
+
+  const handleMagicLink = () => {
+    console.log(process.env.EXPO_PUBLIC_API_ROOT);
     router.replace("/(tabs)");
   };
 
@@ -29,61 +35,86 @@ export default function AuthScreen() {
           {/* Form Header */}
           <VStack>
             <Heading size="xl">Login to your account</Heading>
-            <HStack>
-              <Text className="font-normal" size="sm">
-                Don't have an account?
-              </Text>
-              {/* TODO:: Make this clickable */}
-              <Text className="font-medium" size="sm">
-                Sign up
-              </Text>
-            </HStack>
+            {!allowMagicLink && (
+              <HStack>
+                <Text className="font-normal" size="sm">
+                  Don't have an account?
+                </Text>
+                {/* TODO:: Make this clickable */}
+                <Text className="font-medium" size="sm">
+                  Sign up
+                </Text>
+              </HStack>
+            )}
           </VStack>
 
           {/* Form Content */}
           <VStack space="4xl">
-            {/* Login Form */}
-            <VStack space="md">
-              <FormControl>
-                <FormControlLabel>
-                  <FormControlLabelText>Subject</FormControlLabelText>
-                </FormControlLabel>
-                <Input variant="outline">
-                  <InputField placeholder="abc@mail.com" />
-                </Input>
-              </FormControl>
-              <FormControl>
-                <FormControlLabel>
-                  <FormControlLabelText>Password</FormControlLabelText>
-                </FormControlLabel>
-                <Input variant="outline">
-                  <InputField placeholder="Enter password" />
-                </Input>
-              </FormControl>
-            </VStack>
+            {allowEmailPassword && (
+              <>
+                {/* Email Password Login Form */}
+                <VStack space="md">
+                  <FormControl>
+                    <FormControlLabel>
+                      <FormControlLabelText>Subject</FormControlLabelText>
+                    </FormControlLabel>
+                    <Input variant="outline">
+                      <InputField placeholder="abc@mail.com" />
+                    </Input>
+                  </FormControl>
+                  <FormControl>
+                    <FormControlLabel>
+                      <FormControlLabelText>Password</FormControlLabelText>
+                    </FormControlLabel>
+                    <Input variant="outline">
+                      <InputField placeholder="Enter password" />
+                    </Input>
+                  </FormControl>
+                </VStack>
+              </>
+            )}
 
-            {/* Login button */}
-            <Button size="md" onPress={handleLogIn}>
-              <ButtonText>Login</ButtonText>
-            </Button>
+            {allowMagicLink && (
+              <>
+                {/* Email Password Login Form */}
+                <VStack space="md">
+                  <FormControl>
+                    <FormControlLabel>
+                      <FormControlLabelText>Email</FormControlLabelText>
+                    </FormControlLabel>
+                    <Input variant="outline">
+                      <InputField placeholder="abc@mail.com" />
+                    </Input>
+                  </FormControl>
+                </VStack>
 
-            {/* Divider for Social Login */}
-            <HStack className="items-center">
-              <Divider orientation="horizontal" className="flex-1" />
-              <Text
-                className="font-normal text-typography-600 flex-1"
-                size="xs"
-              >
-                OR CONTINUE WITH
-              </Text>
-              <Divider orientation="horizontal" className="flex-1" />
-            </HStack>
+                <Button size="md" onPress={handleMagicLink}>
+                  <ButtonText>Login</ButtonText>
+                </Button>
+              </>
+            )}
 
-            {/* Social Login */}
-            <Button size="md">
-              <ButtonIcon as={GoogleIcon} />
-              <ButtonText>Sign in with Google</ButtonText>
-            </Button>
+            {allowOath && (
+              <>
+                {/* Divider for Social Login */}
+                <HStack className="items-center">
+                  <Divider orientation="horizontal" className="flex-1" />
+                  <Text
+                    className="font-normal text-typography-600 flex-1"
+                    size="xs"
+                  >
+                    OR CONTINUE WITH
+                  </Text>
+                  <Divider orientation="horizontal" className="flex-1" />
+                </HStack>
+
+                {/* Social Login */}
+                <Button size="md">
+                  <ButtonIcon as={GoogleIcon} />
+                  <ButtonText>Sign in with Google</ButtonText>
+                </Button>
+              </>
+            )}
           </VStack>
         </VStack>
       </View>

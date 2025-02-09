@@ -17,18 +17,19 @@ export default function RootLayout() {
 
   const router = useRouter();
 
+  // TODO:: Fix flicker screen when starting onboard
   useEffect(() => {
     const checkOnboarding = async () => {
       const hasOnboarded = await AsyncStorage.getItem("hasOnboarded");
       if (!hasOnboarded) {
-        router.replace("/onboarding");
+        // router.replace("/onboarding");
+        router.replace("/(tabs)");
       }
     };
 
     checkOnboarding();
   }, []);
 
-  // TODO:: Fix flicker screen when starting onboard
 
   return (
     <GluestackUIProvider mode="light">

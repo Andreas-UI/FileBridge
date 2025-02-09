@@ -1,20 +1,21 @@
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
-import { useFolderById } from "@/tanstack/query/useFolderById";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Heading } from "@/components/ui/heading";
-import { FolderSummaryCard } from "@/components/folderSummary/folderSummaryCard";
 import React from "react";
-import { FolderQrModal } from "@/components/folderSummary/folderQRModal";
 import { FlashList } from "@shopify/flash-list";
-import { FileItem } from "@/components/fileItem";
-import { AddFileFAB } from "@/components/addFileFAB";
+import { FileItem } from "@/components/FileItem";
+import { AddFileFAB } from "@/components/AddFileFAB";
+import { useFindByIdFolder } from "@/api/folder";
+import { FolderSummaryCard } from "@/components/folderSummary/FolderSummaryCard";
+import { FolderQrModal } from "@/components/folderSummary/FolderQRModal";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const { id } = useLocalSearchParams();
 
-  const { data, isLoading, error } = useFolderById(id);
+  const { data, error, isLoading } = useFindByIdFolder(Number(id));
 
   if (isLoading) {
     return (
@@ -53,15 +54,15 @@ export default function Index() {
           <FlashList
             data={data?.files}
             estimatedItemSize={10}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => String(item.id)}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <FileItem
                 id={item.id}
-                file_name={item.file_name}
+                name={item.name.replace(`${id}/`, "")}
                 mime_type={item.mime_type}
                 size_kb={item.size_kb}
-                upload_date={item.upload_date}
+                created_at={item.created_at}
                 key={item.id}
               />
             )}

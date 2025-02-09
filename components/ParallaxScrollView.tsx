@@ -7,7 +7,7 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 import { useBottomTabOverflow } from "./ui/TabBarBackground";
-import { BrandCard } from "./brandCard";
+import { BrandCard } from "./BrandCard";
 import { Text } from "@/components/ui/text";
 
 const HEADER_HEIGHT = 300;

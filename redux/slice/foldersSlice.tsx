@@ -1,37 +1,14 @@
+import { Folder } from "@/api/api.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface File {
-  id: string;
-  file_name: string;
-  upload_date: string;
-  size_kb: number;
-  mime_type: string;
-}
-
-export interface Folder {
-  // Multiselect
-  is_selected: boolean;
-
-  // Folder Metadata
-  id: string;
-  subject: string;
-  description: string;
-  created_date: string;
-  last_modified: string;
-  file_count: number;
-  files: File[];
-}
 
 export interface foldersState {
   isMultiSelect: boolean;
-  folders: Folder[];
-  total_folders: 0;
+  folders: Record<Folder["id"], boolean>;
 }
 
 const initialState: foldersState = {
   isMultiSelect: false,
-  folders: [],
-  total_folders: 0,
+  folders: {},
 };
 
 export const foldersSlice = createSlice({
@@ -39,41 +16,38 @@ export const foldersSlice = createSlice({
   initialState: initialState,
   reducers: {
     clearFolders: (state) => {
-      state.folders = [];
-      state.total_folders = 0;
+      state.folders = {};
     },
-    addFolder: (state, action: PayloadAction<Folder>) => {
-      state.folders.push(action.payload);
-      state.total_folders += 1;
+    addFolder: (state, action: PayloadAction<Folder["id"]>) => {
+      state.folders[action.payload] = false;
     },
     deleteFolder: (state, action: PayloadAction<{ id: string }>) => {
-      const index = state.folders.findIndex(
-        (folder) => folder.id === action.payload.id
-      );
-
-      if (index !== -1) {
-        state.folders.splice(index, 1);
-        state.total_folders -= 1;
-      }
+      // TODO:: To Be Fixed
+      // const index = state.folders.findIndex(
+      //   (folder) => folder.id === action.payload.id
+      // );
+      // if (index !== -1) {
+      //   state.folders.splice(index, 1);
+      //   state.total_folders -= 1;
+      // }
     },
-    selectFolder: (state, action: PayloadAction<{ id: string }>) => {
-      const index = state.folders.findIndex(
-        (folder) => folder.id === action.payload.id
-      );
-
-      if (index !== -1) {
-        state.folders[index].is_selected = !state.folders[index].is_selected;
-      }
+    selectFolder: (state, action: PayloadAction<Folder["id"]>) => {
+      const id = action.payload;
+      state.folders[id] = !state.folders[id];
     },
     selectAllFolder: (state) => {
-      state.folders.forEach((folder) => (folder.is_selected = true));
+      Object.keys(state.folders).forEach((id) => {
+        state.folders[Number(id)] = true;
+      });
     },
     enableMultiSelect: (state) => {
       state.isMultiSelect = true;
     },
     disableMultiSelect: (state) => {
       state.isMultiSelect = false;
-      state.folders.forEach((folder) => (folder.is_selected = false));
+      Object.keys(state.folders).forEach((id) => {
+        state.folders[Number(id)] = false;
+      });
     },
   },
 });

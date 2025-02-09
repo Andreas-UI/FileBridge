@@ -4,15 +4,11 @@ import { HStack } from "../ui/hstack";
 import { VStack } from "../ui/vstack";
 import { Text } from "../ui/text";
 import { Button, ButtonText } from "../ui/button";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useDispatch } from "react-redux";
 import { openTierCardModal } from "@/redux/slice/tierCardModalSlice";
 
-export const TierCard = () => {
+export const TierCard = ({ total_folders }: { total_folders: number }) => {
   const dispatch = useDispatch();
-  const total_folders = useSelector(
-    (state: RootState) => state.folders.total_folders
-  );
   return (
     <Card size="md" variant="outline">
       <HStack className="items-center">

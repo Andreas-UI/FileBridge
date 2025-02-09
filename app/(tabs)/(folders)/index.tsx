@@ -1,11 +1,11 @@
-import { CreateFolderFAB } from "@/components/createFolder/createFolderFAB";
-import { CreateFolderModal } from "@/components/createFolder/createFolderModal";
-import { FolderItem } from "@/components/folderItem";
-import { TierCard } from "@/components/tierCard/tierCard";
-import { TierCardModal } from "@/components/tierCard/tierCardModal";
+import { useFindAllFolder } from "@/api/folder";
+import { CreateFolderFAB } from "@/components/createFolder/CreateFolderFAB";
+import { CreateFolderModal } from "@/components/createFolder/CreateFolderModal";
+import { FolderItem } from "@/components/FolderItem";
+import { TierCard } from "@/components/tierCard/TierCard";
+import { TierCardModal } from "@/components/tierCard/TierCardModal";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { foldersDummyData } from "@/dummy_data/folders";
 import {
   addFolder,
   clearFolders,
@@ -21,20 +21,20 @@ import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Index() {
+  console.log("Rendering (Folder)");
   const dispatch = useDispatch();
 
-  const foldersData = useSelector((state: RootState) => state.folders).folders;
-  const total_folders = useSelector(
-    (state: RootState) => state.folders
-  ).total_folders;
-  const isMultiSelect = useSelector(
-    (state: RootState) => state.folders
-  ).isMultiSelect;
+  const { data: foldersData = [], isFetched } = useFindAllFolder();
 
   useEffect(() => {
     dispatch(clearFolders());
-    foldersDummyData.forEach((folder) => dispatch(addFolder(folder)));
-  }, []);
+    foldersData?.forEach((folder) => dispatch(addFolder(folder.id)));
+    console.log("FETCHED");
+  }, [isFetched]);
+
+  const isMultiSelect = useSelector(
+    (state: RootState) => state.folders.isMultiSelect
+  );
 
   return (
     <>
@@ -74,39 +74,43 @@ export default function Index() {
         <Text className="font-light" size="3xl">
           Folders
         </Text>
-        <TierCard />
+        <TierCard total_folders={foldersData.length} />
         {/* TODO:: Make this workable */}
         <Text className="font-medium" size="md">
           Sort by: Date
         </Text>
-        <FlashList
-          data={foldersData}
-          estimatedItemSize={10}
-          ListFooterComponent={
-            <Text
-              className="font-normal text-center text-typography-500 mb-10"
-              size="sm"
-            >
-              {`${10 - total_folders} folders left`}
-            </Text>
-          }
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <FolderItem
-              id={item.id}
-              file_count={item.file_count}
-              is_selected={item.is_selected}
-              last_modified={item.last_modified}
-              subject={item.subject}
-              key={item.id}
-            />
-          )}
-        />
+        {foldersData.length < 0 ? (
+          <Text> No folders created. </Text>
+        ) : (
+          <FlashList
+            data={foldersData}
+            estimatedItemSize={10}
+            ListFooterComponent={
+              <Text
+                className="font-normal text-center text-typography-500 mb-10"
+                size="sm"
+              >
+                {`${10 - foldersData.length} folders left`}
+              </Text>
+            }
+            keyExtractor={(item) => String(item.id)}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <FolderItem
+                id={item.id}
+                file_count={item.file_count}
+                created_at={item.created_at}
+                subject={item.subject}
+                key={item.id}
+              />
+            )}
+            extraData={isMultiSelect}
+          />
+        )}
       </View>
 
       {/* Create New Folder Components */}
-      {!isMultiSelect && total_folders < 10 && (
+      {!isMultiSelect && foldersData.length < 100 && (
         <>
           <CreateFolderFAB />
           <CreateFolderModal />

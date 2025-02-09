@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Heading } from "../ui/heading";
 import { closefolderQRModal } from "@/redux/slice/folderQrModalSlice";
-import { Folder as FolderType } from "@/redux/slice/foldersSlice";
+import { Folder as FolderType } from "@/api/api.types";
 
 export const FolderQrModal = ({
   subject,

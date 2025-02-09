@@ -1,3 +1,14 @@
+export type File = {
+  created_at: string;
+  folder: number | null;
+  id: number;
+  mime_type: string | null;
+  name: string;
+  size_kb: number | null;
+  user: string | null;
+  url: string;
+};
+
 export type Folder = {
   created_at: string;
   description: string | null;
@@ -5,7 +16,9 @@ export type Folder = {
   subject: string;
   user: string | null;
   qrcode_url: string | null;
-  is_selected: boolean | null;
+
+  file_count: number;
+  files: File[];
 };
 
 export type CreateFolder = {

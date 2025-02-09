@@ -1,6 +1,4 @@
-import { Folder as FolderType } from "@/redux/slice/foldersSlice";
-
-export const foldersDummyData: FolderType[] = [
+export const foldersDummyData = [
   {
     id: "1",
     subject: "Restaurant Launching Brochure",

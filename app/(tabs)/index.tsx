@@ -1,3 +1,4 @@
+import { useFindAllFolder } from "@/api/folder";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import {
   Accordion,
@@ -12,7 +13,6 @@ import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { foldersDummyData } from "@/dummy_data/folders";
 import { addFolder, clearFolders } from "@/redux/slice/foldersSlice";
 import { RootState } from "@/redux/store";
 import { getFileIconByMimeType } from "@/utils/iconExtension";
@@ -26,15 +26,15 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Index() {
   const dispatch = useDispatch();
 
-  const foldersData = useSelector((state: RootState) => state.folders).folders;
-  const total_folders = useSelector(
+  const { data: foldersData = [], isFetched } = useFindAllFolder();
+  const selectFoldersData = useSelector(
     (state: RootState) => state.folders
-  ).total_folders;
+  ).folders;
 
   useEffect(() => {
     dispatch(clearFolders());
-    foldersDummyData.forEach((folder) => dispatch(addFolder(folder)));
-  }, []);
+    foldersData?.forEach((folder) => dispatch(addFolder(folder.id)));
+  }, [isFetched]);
 
   return (
     <ParallaxScrollView>
@@ -74,7 +74,7 @@ export default function Index() {
                                 fontSize: 12,
                               }}
                             >
-                              {`${folder.last_modified} | ${folder.file_count} items`}
+                              {`${folder.created_at} | ${folder.file_count} items`}
                             </AccordionTitleText>
                           </VStack>
                           {isExpanded ? (
@@ -103,23 +103,23 @@ export default function Index() {
                     </Card>
                   </View>
 
-                  {folder.files.map((file) => (
+                  {folder.files.slice(1).map((file) => (
                     <View key={file.id} style={styles.cardContainer}>
                       <Card size="lg" variant="ghost" style={styles.card}>
-                        {getFileIconByMimeType(file.mime_type, 26)}
+                        {getFileIconByMimeType(file.mime_type || "", 26)}
                         <Text
                           numberOfLines={2}
                           ellipsizeMode="tail"
                           style={styles.text}
                         >
-                          {file.file_name}
+                          {file.name.replace(`${folder.id}/`, "")}
                         </Text>
                       </Card>
                     </View>
                   ))}
                 </AccordionContent>
               </AccordionItem>
-              <Divider className="my-4"/>
+              <Divider className="my-4" />
             </React.Fragment>
           ))}
         </Accordion>

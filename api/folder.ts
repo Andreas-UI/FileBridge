@@ -32,6 +32,21 @@ export const useFindAllFolder = () => {
   });
 };
 
+// Find Folder By ID API
+const findByIdFolder = async (folder_id: Folder["id"]): Promise<Folder> => {
+  const response = await api.get<Folder>("/api/folder/findById", {
+    params: { id: folder_id },
+  });
+  return response.data;
+};
+
+export const useFindByIdFolder = (folder_id: Folder["id"]) => {
+  return useQuery<Folder, Error>({
+    queryFn: () => findByIdFolder(folder_id),
+    queryKey: ["folder", folder_id],
+  });
+};
+
 // Delete Folder API
 const deleteFolder = async (folder_ids: Folder["id"][]): Promise<void> => {
   await api.post("/api/folder/delete", { folder_ids: folder_ids });

@@ -7,7 +7,7 @@ import { store } from "@/redux/store";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { verifyInstallation } from "nativewind";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const queryClient = new QueryClient();

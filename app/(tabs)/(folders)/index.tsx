@@ -14,11 +14,32 @@ import {
 } from "@/redux/slice/foldersSlice";
 import { RootState } from "@/redux/store";
 import { FlashList } from "@shopify/flash-list";
-import { Stack } from "expo-router";
+import { Stack, useFocusEffect } from "expo-router";
 import { ListCheck, X } from "lucide-react-native";
-import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect } from "react";
+import { BackHandler, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+
+const useMultiSelectBackHandler = (isMultiSelect: boolean) => {
+  const dispatch = useDispatch();
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (isMultiSelect) {
+          dispatch(disableMultiSelect());
+          return true;
+        }
+        return false;
+      };
+
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    }, [isMultiSelect])
+  );
+};
 
 export default function Index() {
   console.log("Rendering (Folder)");
@@ -35,6 +56,8 @@ export default function Index() {
   const isMultiSelect = useSelector(
     (state: RootState) => state.folders.isMultiSelect
   );
+
+  useMultiSelectBackHandler(isMultiSelect);
 
   return (
     <>
@@ -98,7 +121,7 @@ export default function Index() {
             renderItem={({ item }) => (
               <FolderItem
                 id={item.id}
-                file_count={item.file_count}
+                file_count={item.file_count - 1}
                 created_at={item.created_at}
                 subject={item.subject}
                 key={item.id}

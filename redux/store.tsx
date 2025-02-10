@@ -3,6 +3,7 @@ import createFolderModalReducer from "./slice/createFolderModalSlice";
 import tierCardModalReducer from "./slice/tierCardModalSlice";
 import folderQrModalReducer from "./slice/folderQrModalSlice";
 import foldersReducer from "./slice/foldersSlice";
+import devToolsEnhancer from "redux-devtools-expo-dev-plugin";
 
 // Configure the store
 export const store = configureStore({
@@ -12,6 +13,9 @@ export const store = configureStore({
     folderQrModal: folderQrModalReducer,
     folders: foldersReducer,
   },
+  devTools: false,
+  enhancers: (getDefaultEnhancers) =>
+    getDefaultEnhancers().concat(devToolsEnhancer()),
 });
 
 // Get the type of our store variable

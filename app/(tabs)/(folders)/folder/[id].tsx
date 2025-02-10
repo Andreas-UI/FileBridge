@@ -1,6 +1,6 @@
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Heading } from "@/components/ui/heading";
 import React from "react";
@@ -11,9 +11,12 @@ import { useFindByIdFolder } from "@/api/folder";
 import { FolderSummaryCard } from "@/components/folderSummary/FolderSummaryCard";
 import { FolderQrModal } from "@/components/folderSummary/FolderQRModal";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react-native";
 
 export default function Index() {
   const { id } = useLocalSearchParams();
+  const router = useRouter();
 
   const { data, error, isLoading } = useFindByIdFolder(Number(id));
 
@@ -33,8 +36,18 @@ export default function Index() {
   }
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.view} className="bg-background-0">
+        <Button
+          style={{ alignSelf: "flex-start", alignItems: "center" }}
+          size="xl"
+          className="w-fit"
+          variant="link"
+          onPress={() => router.back()}
+        >
+          <ButtonIcon as={ChevronLeft} />
+          <ButtonText className="font-light text-xl">Back</ButtonText>
+        </Button>
         <FolderSummaryCard />
         <VStack>
           <Text className="font-light" size="sm">
@@ -42,9 +55,11 @@ export default function Index() {
           </Text>
           <VStack>
             <Heading size="lg">{data?.subject}</Heading>
-            <Text className="font-normal" size="md">
-              {data?.description}
-            </Text>
+            {data?.description && (
+              <Text className="font-normal" size="md">
+                {data?.description}
+              </Text>
+            )}
           </VStack>
         </VStack>
         <View className="flex-1">
@@ -52,10 +67,11 @@ export default function Index() {
             Files:
           </Text>
           <FlashList
-            data={data?.files}
+            data={data?.files.slice(1)}
             estimatedItemSize={10}
             keyExtractor={(item) => String(item.id)}
             showsVerticalScrollIndicator={false}
+            ListFooterComponent={<View className="h-10" />}
             renderItem={({ item }) => (
               <FileItem
                 id={item.id}
@@ -69,12 +85,9 @@ export default function Index() {
           />
         </View>
       </View>
-
-      {/* TODO:: FAB not showing */}
       <AddFileFAB />
-
-      <FolderQrModal subject={data?.subject} />
-    </>
+      <FolderQrModal subject={data?.subject} qrcode_url={data?.qrcode_url} />
+    </SafeAreaView>
   );
 }
 

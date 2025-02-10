@@ -1,11 +1,8 @@
 import { Button, ButtonText } from "../ui/button";
-import { CloseIcon, Icon } from "../ui/icon";
-import { Text } from "../ui/text";
 import {
   Modal,
   ModalBackdrop,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -15,11 +12,15 @@ import { RootState } from "@/redux/store";
 import { Heading } from "../ui/heading";
 import { closefolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { Folder as FolderType } from "@/api/api.types";
+import { Image } from "../ui/image";
+import { Center } from "../ui/center";
 
 export const FolderQrModal = ({
   subject,
+  qrcode_url,
 }: {
   subject?: FolderType["subject"];
+  qrcode_url?: FolderType["qrcode_url"];
 }) => {
   const dispatch = useDispatch();
   const folderQrModalState = useSelector(
@@ -35,32 +36,33 @@ export const FolderQrModal = ({
     >
       <ModalBackdrop />
       <ModalContent>
-        <ModalHeader>
-          <Heading size="md" className="text-typography-950">
-            {subject}
-          </Heading>
-          <ModalCloseButton>
-            <Icon
-              as={CloseIcon}
-              size="md"
-              className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
-            />
-          </ModalCloseButton>
-        </ModalHeader>
-        <ModalBody>
-          <Text size="sm" className="text-typography-500">
-            QRCode Picture Here
-          </Text>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            onPress={() => {
-              dispatch(closefolderQRModal());
-            }}
-          >
-            <ButtonText>Close</ButtonText>
-          </Button>
-        </ModalFooter>
+        <Center>
+          <ModalHeader>
+            <Heading size="lg" className="text-typography-950">
+              {subject}
+            </Heading>
+          </ModalHeader>
+          <ModalBody>
+            {qrcode_url && (
+              <Image
+                size="2xl"
+                source={{
+                  uri: qrcode_url,
+                }}
+              />
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full"
+              onPress={() => {
+                dispatch(closefolderQRModal());
+              }}
+            >
+              <ButtonText>Close</ButtonText>
+            </Button>
+          </ModalFooter>
+        </Center>
       </ModalContent>
     </Modal>
   );

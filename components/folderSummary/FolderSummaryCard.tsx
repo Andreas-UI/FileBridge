@@ -6,7 +6,7 @@ import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { QrCode } from "lucide-react-native";
-import { openfolderQRModal } from "@/redux/slice/folderQrModalSlice";
+import { openFolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { Folder as FolderType } from "@/api/api.types";
 
 export const FolderSummaryCard = ({
@@ -38,7 +38,7 @@ export const FolderSummaryCard = ({
             variant="link"
             onPress={() =>
               dispatch(
-                openfolderQRModal({
+                openFolderQRModal({
                   subject: subject,
                   qrcode_url: qrcode_url,
                 })

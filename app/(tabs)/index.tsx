@@ -13,7 +13,7 @@ import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { openfolderQRModal } from "@/redux/slice/folderQrModalSlice";
+import { openFolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { addFolder, clearFolders } from "@/redux/slice/foldersSlice";
 import { RootState } from "@/redux/store";
 import { getFileIconByMimeType } from "@/utils/iconExtension";
@@ -79,7 +79,7 @@ export default function Index() {
                               {`${format(
                                 new Date(folder.created_at),
                                 "dd/MM/yyyy"
-                              )} | ${folder.file_count} items`}
+                              )} | ${folder.file_count - 1} items`}
                             </AccordionTitleText>
                           </VStack>
                           {isExpanded ? (
@@ -98,7 +98,7 @@ export default function Index() {
                       <Pressable
                         onPress={() =>
                           dispatch(
-                            openfolderQRModal({
+                            openFolderQRModal({
                               subject: folder.subject,
                               qrcode_url: folder.qrcode_url,
                             })
@@ -117,13 +117,13 @@ export default function Index() {
                     </Card>
                   </View>
 
-                  {folder.files.slice(1).map((file) => (
+                  {folder.files.filter((file) => file.name != `${folder.id}/qrcode.png`).map((file) => (
                     <View key={file.id} style={styles.cardContainer}>
                       <Card size="lg" variant="ghost" style={styles.card}>
                         {getFileIconByMimeType(file.mime_type || "", 26)}
                         <Text
                           numberOfLines={2}
-                          ellipsizeMode="tail"
+                          ellipsizeMode="middle"
                           style={styles.text}
                         >
                           {file.name.replace(`${folder.id}/`, "")}

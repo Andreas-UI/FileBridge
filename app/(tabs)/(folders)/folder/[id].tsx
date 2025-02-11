@@ -6,11 +6,9 @@ import { Heading } from "@/components/ui/heading";
 import React from "react";
 import { FlashList } from "@shopify/flash-list";
 import { FileItem } from "@/components/FileItem";
-import { AddFileFAB } from "@/components/AddFileFAB";
+import { AddFileFAB } from "@/components/addFile/AddFileFAB";
 import { useFindByIdFolder } from "@/api/folder";
 import { FolderSummaryCard } from "@/components/folderSummary/FolderSummaryCard";
-import { FolderQrModal } from "@/components/folderSummary/FolderQRModal";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react-native";
 
@@ -36,7 +34,7 @@ export default function Index() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <>
       <View style={styles.view} className="bg-background-0">
         <Button
           style={{ alignSelf: "flex-start", alignItems: "center" }}
@@ -70,7 +68,7 @@ export default function Index() {
             Files:
           </Text>
           <FlashList
-            data={data?.files.slice(1)}
+            data={data?.files.filter((file) => file.name != `${id}/qrcode.png`)}
             estimatedItemSize={10}
             keyExtractor={(item) => String(item.id)}
             showsVerticalScrollIndicator={false}
@@ -88,8 +86,8 @@ export default function Index() {
           />
         </View>
       </View>
-      <AddFileFAB />
-    </SafeAreaView>
+      <AddFileFAB folder_id={Number(id)} />
+    </>
   );
 }
 
@@ -98,6 +96,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 18,
     paddingVertical: 24,
+    paddingTop: 36,
     gap: 16,
   },
 });

@@ -1,13 +1,16 @@
+import { AddFileDrawer } from "@/components/addFile/AddFileDrawer";
 import { DeleteFolderBottomTab } from "@/components/DeleteFolderBottomTab";
 import { FolderQrModal } from "@/components/folderSummary/FolderQRModal";
 import { Icon } from "@/components/ui/icon";
 import { Tabs } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Files, LayoutDashboard, ScanQrCode, User } from "lucide-react-native";
 
 export default function TabsLayout() {
   console.log("Rendering TabsLayout");
   return (
     <>
+      <StatusBar />
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
@@ -70,7 +73,9 @@ export default function TabsLayout() {
         />
       </Tabs>
       <DeleteFolderBottomTab />
+
       <FolderQrModal />
+      <AddFileDrawer />
     </>
   );
 }

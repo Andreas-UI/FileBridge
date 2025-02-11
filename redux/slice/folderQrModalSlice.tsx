@@ -16,7 +16,7 @@ export const folderQrModalSlice = createSlice({
   name: "folderQRModal",
   initialState: initialState,
   reducers: {
-    openfolderQRModal: (
+    openFolderQRModal: (
       state,
       action: PayloadAction<{
         subject: FolderQRModalState["subject"];
@@ -27,7 +27,7 @@ export const folderQrModalSlice = createSlice({
       state.subject = action.payload.subject;
       state.qrcode_url = action.payload.qrcode_url;
     },
-    closefolderQRModal: (state) => {
+    closeFolderQRModal: (state) => {
       state.isOpen = false;
       state.subject = "";
       state.qrcode_url = "";
@@ -35,7 +35,7 @@ export const folderQrModalSlice = createSlice({
   },
 });
 
-export const { closefolderQRModal, openfolderQRModal } =
+export const { closeFolderQRModal, openFolderQRModal } =
   folderQrModalSlice.actions;
 
 export default folderQrModalSlice.reducer;

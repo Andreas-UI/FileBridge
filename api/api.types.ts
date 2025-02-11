@@ -21,6 +21,11 @@ export type Folder = {
   files: File[];
 };
 
+export type CreateFile = {
+  folder_id: Folder["id"];
+  files: any;
+};
+
 export type CreateFolder = {
   subject: string;
   description: string | null | undefined;

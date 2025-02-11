@@ -1,6 +1,7 @@
 import { FileText, FileImage, FileMusic, FileVideo, FolderArchive, FileCode, File, FileQuestion } from 'lucide-react-native';
 
 export function getFileIconByMimeType(mimeType: string, size: number): React.ReactNode {
+  // TODO:: Fix backend mimetype sent is octet-type instead of the mimetype
   const mimeTypeMap: Record<string, React.ReactNode> = {
     // Text types
     'text/plain': <FileText color={"#535252"} size={size}/>,

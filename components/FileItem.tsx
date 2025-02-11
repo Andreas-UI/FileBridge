@@ -18,7 +18,12 @@ export const FileItem = ({
       <HStack className="flex w-full gap-4 items-center py-2">
         {getFileIconByMimeType(mime_type || "", 26)}
         <VStack className="flex-1">
-          <Text className="font-medium text-black" size="md">
+          <Text
+            className="font-medium text-black"
+            size="md"
+            numberOfLines={2}
+            ellipsizeMode="middle"
+          >
             {name}
           </Text>
           <HStack space="sm">

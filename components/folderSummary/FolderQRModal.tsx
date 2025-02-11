@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Heading } from "../ui/heading";
-import { closefolderQRModal } from "@/redux/slice/folderQrModalSlice";
+import { closeFolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { Image } from "../ui/image";
 import { Center } from "../ui/center";
 
@@ -23,7 +23,7 @@ export const FolderQrModal = () => {
     <Modal
       isOpen={folderQrModalState.isOpen}
       onClose={() => {
-        dispatch(closefolderQRModal());
+        dispatch(closeFolderQRModal());
       }}
       size="lg"
     >
@@ -49,7 +49,7 @@ export const FolderQrModal = () => {
             <Button
               className="w-full"
               onPress={() => {
-                dispatch(closefolderQRModal());
+                dispatch(closeFolderQRModal());
               }}
             >
               <ButtonText>Close</ButtonText>

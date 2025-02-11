@@ -1,4 +1,5 @@
 import { DeleteFolderBottomTab } from "@/components/DeleteFolderBottomTab";
+import { FolderQrModal } from "@/components/folderSummary/FolderQRModal";
 import { Icon } from "@/components/ui/icon";
 import { Tabs } from "expo-router";
 import { Files, LayoutDashboard, ScanQrCode, User } from "lucide-react-native";
@@ -69,6 +70,7 @@ export default function TabsLayout() {
         />
       </Tabs>
       <DeleteFolderBottomTab />
+      <FolderQrModal />
     </>
   );
 }

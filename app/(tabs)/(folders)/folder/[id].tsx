@@ -48,7 +48,10 @@ export default function Index() {
           <ButtonIcon as={ChevronLeft} />
           <ButtonText className="font-light text-xl">Back</ButtonText>
         </Button>
-        <FolderSummaryCard />
+        <FolderSummaryCard
+          subject={data?.subject || ""}
+          qrcode_url={data?.qrcode_url || ""}
+        />
         <VStack>
           <Text className="font-light" size="sm">
             Subject
@@ -86,7 +89,6 @@ export default function Index() {
         </View>
       </View>
       <AddFileFAB />
-      <FolderQrModal subject={data?.subject} qrcode_url={data?.qrcode_url} />
     </SafeAreaView>
   );
 }

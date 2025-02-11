@@ -15,7 +15,7 @@ export type Folder = {
   id: number;
   subject: string;
   user: string | null;
-  qrcode_url: string | null;
+  qrcode_url: string;
 
   file_count: number;
   files: File[];

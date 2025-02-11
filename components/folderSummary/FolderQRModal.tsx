@@ -11,17 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Heading } from "../ui/heading";
 import { closefolderQRModal } from "@/redux/slice/folderQrModalSlice";
-import { Folder as FolderType } from "@/api/api.types";
 import { Image } from "../ui/image";
 import { Center } from "../ui/center";
 
-export const FolderQrModal = ({
-  subject,
-  qrcode_url,
-}: {
-  subject?: FolderType["subject"];
-  qrcode_url?: FolderType["qrcode_url"];
-}) => {
+export const FolderQrModal = () => {
   const dispatch = useDispatch();
   const folderQrModalState = useSelector(
     (state: RootState) => state.folderQrModal
@@ -39,15 +32,15 @@ export const FolderQrModal = ({
         <Center>
           <ModalHeader>
             <Heading size="lg" className="text-typography-950">
-              {subject}
+              {folderQrModalState.subject}
             </Heading>
           </ModalHeader>
           <ModalBody>
-            {qrcode_url && (
+            {folderQrModalState.qrcode_url && (
               <Image
                 size="2xl"
                 source={{
-                  uri: qrcode_url,
+                  uri: folderQrModalState.qrcode_url,
                 }}
               />
             )}

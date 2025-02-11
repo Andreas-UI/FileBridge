@@ -7,8 +7,15 @@ import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { QrCode } from "lucide-react-native";
 import { openfolderQRModal } from "@/redux/slice/folderQrModalSlice";
+import { Folder as FolderType } from "@/api/api.types";
 
-export const FolderSummaryCard = () => {
+export const FolderSummaryCard = ({
+  subject,
+  qrcode_url,
+}: {
+  subject: FolderType["subject"];
+  qrcode_url: FolderType["qrcode_url"];
+}) => {
   const dispatch = useDispatch();
   return (
     <Card size="md" variant="outline" className="bg-background-950 p-6">
@@ -27,7 +34,17 @@ export const FolderSummaryCard = () => {
               </Text>
             </VStack>
           </VStack>
-          <Button variant="link" onPress={() => dispatch(openfolderQRModal())}>
+          <Button
+            variant="link"
+            onPress={() =>
+              dispatch(
+                openfolderQRModal({
+                  subject: subject,
+                  qrcode_url: qrcode_url,
+                })
+              )
+            }
+          >
             <QrCode color="white" size={48} />
           </Button>
         </HStack>

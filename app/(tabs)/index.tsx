@@ -13,9 +13,11 @@ import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { openfolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { addFolder, clearFolders } from "@/redux/slice/foldersSlice";
 import { RootState } from "@/redux/store";
 import { getFileIconByMimeType } from "@/utils/iconExtension";
+import { format } from "date-fns";
 import { ChevronDown, ChevronUp, Equal, QrCode } from "lucide-react-native";
 import React from "react";
 import { useEffect } from "react";
@@ -74,7 +76,10 @@ export default function Index() {
                                 fontSize: 12,
                               }}
                             >
-                              {`${folder.created_at} | ${folder.file_count} items`}
+                              {`${format(
+                                new Date(folder.created_at),
+                                "dd/MM/yyyy"
+                              )} | ${folder.file_count} items`}
                             </AccordionTitleText>
                           </VStack>
                           {isExpanded ? (
@@ -90,7 +95,16 @@ export default function Index() {
                 <AccordionContent style={styles.gridContainer}>
                   <View style={styles.cardContainer}>
                     <Card size="lg" variant="ghost" style={styles.card}>
-                      <Pressable>
+                      <Pressable
+                        onPress={() =>
+                          dispatch(
+                            openfolderQRModal({
+                              subject: folder.subject,
+                              qrcode_url: folder.qrcode_url,
+                            })
+                          )
+                        }
+                      >
                         <QrCode color={"#535252"} size={26} />
                       </Pressable>
                       <Text

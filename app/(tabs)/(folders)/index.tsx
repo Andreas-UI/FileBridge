@@ -5,6 +5,21 @@ import { FolderItem } from "@/components/FolderItem";
 import { TierCard } from "@/components/tierCard/TierCard";
 import { TierCardModal } from "@/components/tierCard/TierCardModal";
 import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
+import {
+  Select,
+  SelectBackdrop,
+  SelectContent,
+  SelectDragIndicator,
+  SelectDragIndicatorWrapper,
+  SelectIcon,
+  SelectInput,
+  SelectItem,
+  SelectPortal,
+  SelectSectionHeaderText,
+  SelectTrigger,
+} from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import {
   addFolder,
@@ -15,8 +30,8 @@ import {
 import { RootState } from "@/redux/store";
 import { FlashList } from "@shopify/flash-list";
 import { Stack, useFocusEffect } from "expo-router";
-import { ListCheck, X } from "lucide-react-native";
-import React, { useCallback, useEffect } from "react";
+import { ChevronDownIcon, ListCheck, X } from "lucide-react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -45,7 +60,23 @@ export default function Index() {
   console.log("Rendering (Folder)");
   const dispatch = useDispatch();
 
-  const { data: foldersData = [], isFetched } = useFindAllFolder();
+  const sort_by_labels = [
+    {
+      label: "Subject",
+      value: "subject",
+    },
+    {
+      label: "Created Date",
+      value: "created_at",
+    },
+  ];
+  const [sortBy, setSortBy] = useState<string>(sort_by_labels[0].value);
+  const {
+    data: foldersData = [],
+    isFetched,
+    isLoading,
+    refetch,
+  } = useFindAllFolder(sortBy);
 
   useEffect(() => {
     dispatch(clearFolders());
@@ -98,10 +129,43 @@ export default function Index() {
           Folders
         </Text>
         <TierCard total_folders={foldersData.length} />
-        {/* TODO:: Make this workable */}
-        <Text className="font-medium" size="md">
-          Sort by: Date
-        </Text>
+        <HStack className="items-center text-center gap-1 justify-between">
+          <Text className="font-light" size="xl">
+            Sort by
+          </Text>
+          <Select
+            defaultValue={sort_by_labels[0].value}
+            initialLabel={sort_by_labels[0].label}
+            onValueChange={(value) => {
+              setSortBy(value);
+              refetch();
+            }}
+          >
+            <SelectTrigger size="md" variant="outline">
+              <SelectInput
+                placeholder="Select option"
+                className="h-20 items-center text-center"
+              />
+              <SelectIcon className="mx-3" as={ChevronDownIcon} />
+            </SelectTrigger>
+            <SelectPortal>
+              <SelectBackdrop />
+              <SelectContent>
+                <SelectDragIndicatorWrapper>
+                  <SelectDragIndicator />
+                </SelectDragIndicatorWrapper>
+                {sort_by_labels.map((sort_by, index) => (
+                  <SelectItem
+                    key={index}
+                    label={sort_by.label}
+                    value={sort_by.value}
+                  />
+                ))}
+              </SelectContent>
+            </SelectPortal>
+          </Select>
+        </HStack>
+        {isLoading && <Text>Loading...</Text>}
         {foldersData.length < 0 ? (
           <Text> No folders created. </Text>
         ) : (

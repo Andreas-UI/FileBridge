@@ -20,15 +20,17 @@ export const useCreateFolder = () => {
 };
 
 // Find All Folder API
-const findAllFolder = async (): Promise<Folder[]> => {
-  const response = await api.get<Folder[]>("/api/folder/findAll");
+const findAllFolder = async (sort_by: string): Promise<Folder[]> => {
+  const response = await api.get<Folder[]>("/api/folder/findAll", {
+    params: { sort_by: sort_by },
+  });
   return response.data;
 };
 
-export const useFindAllFolder = () => {
+export const useFindAllFolder = (sort_by: string = "subject") => {
   return useQuery<Folder[], Error>({
-    queryFn: findAllFolder,
-    queryKey: ["folders"],
+    queryFn: () => findAllFolder(sort_by),
+    queryKey: ["folders", sort_by],
   });
 };
 

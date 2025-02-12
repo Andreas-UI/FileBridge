@@ -15,7 +15,6 @@ import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { openFolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { addFolder, clearFolders } from "@/redux/slice/foldersSlice";
-import { RootState } from "@/redux/store";
 import { getFileIconByMimeType } from "@/utils/iconExtension";
 import { format } from "date-fns";
 import { ChevronDown, ChevronUp, Equal, QrCode } from "lucide-react-native";
@@ -23,15 +22,12 @@ import React from "react";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Pressable } from "react-native-gesture-handler";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Index() {
   const dispatch = useDispatch();
 
-  const { data: foldersData = [], isFetched } = useFindAllFolder();
-  const selectFoldersData = useSelector(
-    (state: RootState) => state.folders
-  ).folders;
+  const { data: foldersData = [], isFetched } = useFindAllFolder("created_at");
 
   useEffect(() => {
     dispatch(clearFolders());
@@ -58,7 +54,7 @@ export default function Index() {
           type="multiple"
           defaultValue={["item-0", "item-1", "item-2"]}
         >
-          {foldersData.map((folder, index) => (
+          {foldersData.reverse().slice(0, 3).map((folder, index) => (
             <React.Fragment key={index}>
               <AccordionItem value={`item-${index}`} className="rounded-lg">
                 <AccordionHeader>
@@ -117,20 +113,22 @@ export default function Index() {
                     </Card>
                   </View>
 
-                  {folder.files.filter((file) => file.name != `${folder.id}/qrcode.png`).map((file) => (
-                    <View key={file.id} style={styles.cardContainer}>
-                      <Card size="lg" variant="ghost" style={styles.card}>
-                        {getFileIconByMimeType(file.mime_type || "", 26)}
-                        <Text
-                          numberOfLines={2}
-                          ellipsizeMode="middle"
-                          style={styles.text}
-                        >
-                          {file.name.replace(`${folder.id}/`, "")}
-                        </Text>
-                      </Card>
-                    </View>
-                  ))}
+                  {folder.files
+                    .filter((file) => file.name != `${folder.id}/qrcode.png`)
+                    .map((file) => (
+                      <View key={file.id} style={styles.cardContainer}>
+                        <Card size="lg" variant="ghost" style={styles.card}>
+                          {getFileIconByMimeType(file.mime_type || "", 26)}
+                          <Text
+                            numberOfLines={2}
+                            ellipsizeMode="middle"
+                            style={styles.text}
+                          >
+                            {file.name.replace(`${folder.id}/`, "")}
+                          </Text>
+                        </Card>
+                      </View>
+                    ))}
                 </AccordionContent>
               </AccordionItem>
               <Divider className="my-4" />

@@ -1,6 +1,6 @@
 export type File = {
   created_at: string;
-  folder: number | null;
+  folder: number;
   id: number;
   mime_type: string | null;
   name: string;
@@ -24,6 +24,11 @@ export type Folder = {
 export type CreateFile = {
   folder_id: Folder["id"];
   files: any;
+};
+
+export type DeleteFiles = {
+  folder_id: Folder["id"];
+  file_ids: File["id"][];
 };
 
 export type CreateFolder = {

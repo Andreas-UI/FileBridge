@@ -15,8 +15,8 @@ export const tierCardModalSlice = createSlice({
     openTierCardModal: (state) => {
       state.isOpen = true;
     },
-    closeTierCardModal: (state) => {
-      state.isOpen = false;
+    closeTierCardModal: () => {
+      return initialState;
     },
   },
 });

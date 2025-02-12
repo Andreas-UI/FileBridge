@@ -36,7 +36,7 @@ export const DeleteFolderBottomTab = () => {
         dispatch(disableMultiSelect());
       },
       onError: (error) => {
-        console.error("Failed to create folder:", error);
+        console.error("Failed to delete folder:", error);
       },
     });
   };

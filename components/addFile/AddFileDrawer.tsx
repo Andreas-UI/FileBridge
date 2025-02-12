@@ -116,7 +116,7 @@ export const AddFileDrawer = () => {
           </Text>
           <FlashList
             ListEmptyComponent={() => (
-              <View className="flex-1 bg-red-50">
+              <View className="flex-1">
                 <Text className="text-typography-400">
                   No files selected, browse files to get started.
                 </Text>

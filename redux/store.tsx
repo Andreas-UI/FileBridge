@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createFolderModalReducer from "./slice/createFolderModalSlice";
 import tierCardModalReducer from "./slice/tierCardModalSlice";
+import deleteFileModalReducer from "./slice/deleteFileModalSlice";
 import folderQrModalReducer from "./slice/folderQrModalSlice";
 import addFileDrawerReducer from "./slice/addFileDrawerSlice";
 import foldersReducer from "./slice/foldersSlice";
@@ -10,6 +11,7 @@ import devToolsEnhancer from "redux-devtools-expo-dev-plugin";
 export const store = configureStore({
   reducer: {
     createFolderModal: createFolderModalReducer,
+    deleteFileModal: deleteFileModalReducer,
     tierCardModal: tierCardModalReducer,
     addFileDrawer: addFileDrawerReducer,
     folderQrModal: folderQrModalReducer,

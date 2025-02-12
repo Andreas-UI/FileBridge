@@ -26,7 +26,7 @@ export const createFolderModalSlice = createSlice({
       state.isOpen = true;
     },
     closeCreateFolderModal: (state) => {
-      state.isOpen = false;
+      return initialState
     },
   },
 });

@@ -21,9 +21,8 @@ export const addFileDrawerSlice = createSlice({
       state.isOpen = true;
       state.folder_id = action.payload;
     },
-    closeAddFileDrawer: (state) => {
-      state.isOpen = false;
-      state.folder_id = -1;
+    closeAddFileDrawer: () => {
+      return initialState
     },
   },
 });

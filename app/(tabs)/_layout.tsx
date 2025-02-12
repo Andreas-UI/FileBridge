@@ -1,4 +1,5 @@
 import { AddFileDrawer } from "@/components/addFile/AddFileDrawer";
+import { DeleteFileModal } from "@/components/deleteFile/DeleteFileModal";
 import { DeleteFolderBottomTab } from "@/components/DeleteFolderBottomTab";
 import { FolderQrModal } from "@/components/folderSummary/FolderQRModal";
 import { Icon } from "@/components/ui/icon";
@@ -72,9 +73,10 @@ export default function TabsLayout() {
           }}
         />
       </Tabs>
-      <DeleteFolderBottomTab />
 
+      <DeleteFolderBottomTab />
       <FolderQrModal />
+      <DeleteFileModal />
       <AddFileDrawer />
     </>
   );

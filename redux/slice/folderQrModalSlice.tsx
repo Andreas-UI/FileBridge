@@ -27,10 +27,8 @@ export const folderQrModalSlice = createSlice({
       state.subject = action.payload.subject;
       state.qrcode_url = action.payload.qrcode_url;
     },
-    closeFolderQRModal: (state) => {
-      state.isOpen = false;
-      state.subject = "";
-      state.qrcode_url = "";
+    closeFolderQRModal: () => {
+      return initialState;
     },
   },
 });

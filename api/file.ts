@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "./api";
-import { CreateFile } from "./api.types";
+import { CreateFile, DeleteFiles, File } from "./api.types";
 import * as FileSystem from "expo-file-system";
 
 import { File as FileType } from "./api.types";
@@ -20,8 +20,8 @@ const createFile = async (data: CreateFile): Promise<FileType[]> => {
 
     const fileBlob = {
       uri: file.uri,
-      name: file.name || "upload.jpg",
-      type: file.mime_type || "application/octet-stream",
+      name: file.name,
+      type: file.mimeType,
     };
 
     formData.append("files", fileBlob as any);
@@ -45,6 +45,27 @@ export const useCreateFile = () => {
           queryKey: ["folder", newFiles[0].folder],
         }),
         queryClient.invalidateQueries({ queryKey: ["folders"] }),
+      ]);
+    },
+  });
+};
+
+// Delete File API
+const deleteFiles = async (data: DeleteFiles): Promise<void> => {
+  await api.post("/api/file/delete", { file_ids: data.file_ids });
+};
+
+export const useDeleteFiles = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, DeleteFiles>({
+    mutationFn: deleteFiles,
+    onSuccess: async (_, { folder_id }) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["folder", folder_id],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["folders"] }), // Refresh folder list
       ]);
     },
   });

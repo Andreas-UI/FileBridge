@@ -67,35 +67,44 @@ export const FileItem = ({
   size_kb,
   created_at,
   id,
+  can_delete = true,
 }: Omit<FileType, "user" | "url"> & {
   folder_subject: FolderType["subject"];
+  can_delete?: boolean;
 }) => {
-  return (
-    <ReanimatedSwipeable
-      renderRightActions={(progress, drag) =>
-        SwipeableRightAction(progress, drag, folder, folder_subject, id, name)
-      }
-      rightThreshold={40}
-      friction={2}
-    >
-      <HStack className="flex w-full gap-4 items-center py-2">
-        {getFileIconByMimeType(mime_type || "", 26)}
-        <VStack className="flex-1">
-          <Text
-            className="font-medium text-black"
-            size="md"
-            numberOfLines={2}
-            ellipsizeMode="middle"
-          >
-            {name}
-          </Text>
-          <HStack space="sm">
-            <Text>{format(new Date(created_at), "dd/MM/yyyy")}</Text>
-            <Text>|</Text>
-            <Text>{formatkB(size_kb || 0)}</Text>
-          </HStack>
-        </VStack>
-      </HStack>
-    </ReanimatedSwipeable>
+  const content = (
+    <HStack className="flex w-full gap-4 items-center py-2">
+      {getFileIconByMimeType(mime_type || "", 26)}
+      <VStack className="flex-1">
+        <Text
+          className="font-medium text-black"
+          size="md"
+          numberOfLines={2}
+          ellipsizeMode="middle"
+        >
+          {name}
+        </Text>
+        <HStack space="sm">
+          <Text>{format(new Date(created_at), "dd/MM/yyyy")}</Text>
+          <Text>|</Text>
+          <Text>{formatkB(size_kb || 0)}</Text>
+        </HStack>
+      </VStack>
+    </HStack>
   );
+
+  if (can_delete) {
+    return (
+      <ReanimatedSwipeable
+        renderRightActions={(progress, drag) =>
+          SwipeableRightAction(progress, drag, folder, folder_subject, id, name)
+        }
+        rightThreshold={40}
+        friction={2}
+      >
+        {content}
+      </ReanimatedSwipeable>
+    );
+  }
+  return content;
 };

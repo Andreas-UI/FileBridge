@@ -12,6 +12,14 @@ export default function ScanLayout() {
           title: "FileBridge",
         }}
       />
+      <Stack.Screen
+        name="folder/[id]"
+        options={{
+          headerShown: false,
+          headerTitleAlign: "center",
+          title: "FileBridge",
+        }}
+      />
     </Stack>
   );
 }

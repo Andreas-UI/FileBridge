@@ -8,6 +8,7 @@ import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 export default function Index() {
   const { theme: currentTheme, setTheme, loading } = useTheme();
   const [selectedTheme, setSelectedTheme] = useState(currentTheme || "light");
+  const [themeApplied, setThemeApplied] = useState(false);
 
   const themeColors: {
     id: string;
@@ -36,6 +37,7 @@ export default function Index() {
   const handleApplyTheme = () => {
     if (selectedTheme) {
       setTheme(selectedTheme);
+      setThemeApplied(true);
     }
   };
 
@@ -62,7 +64,10 @@ export default function Index() {
                 { backgroundColor: `rgb(${item.color})` },
                 selectedTheme === item.value && styles.selected,
               ]}
-              onPress={() => setSelectedTheme(item.value)}
+              onPress={() => {
+                setSelectedTheme(item.value);
+                setThemeApplied(false);
+              }}
             >
               {selectedTheme === item.value && <ButtonIcon as={Check} />}
             </Button>
@@ -70,17 +75,8 @@ export default function Index() {
         />
       </View>
       <View style={styles.bottomView}>
-        <Button
-          size="xl"
-          style={{
-            backgroundColor: `rgb(${
-              themeColors.find((t) => t.value === selectedTheme)?.color ||
-              "51 51 51"
-            })`,
-          }}
-          onPress={handleApplyTheme}
-        >
-          <ButtonText>Apply Theme</ButtonText>
+        <Button size="xl" onPress={handleApplyTheme} disabled={themeApplied}>
+          <ButtonText>{themeApplied ? "Applied!" : "Apply Theme"}</ButtonText>
         </Button>
       </View>
     </>

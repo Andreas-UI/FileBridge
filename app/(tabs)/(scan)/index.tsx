@@ -112,15 +112,15 @@ export default function Index() {
         </CameraView>
         <Alert
           action="info"
-          className="gap-4 w-full flex-row flex py-4 items-start self-center"
+          className="gap-4 w-full flex-row flex py-4 items-start self-center bg-primary-500/70 rounded-none"
         >
-          <AlertIcon as={Focus} className="mt-1" size="xl" />
+          <AlertIcon as={Focus} className="mt-1" size="xl" stroke={"white"}/>
           <HStack className="justify-between flex-1 items-center gap-1 sm:gap-8">
             <VStack className="flex-1">
-              <Text className="font-semibold text-typography-900">
+              <Text className="font-semibold text-typography-0">
                 How to access a FileBridge Folder?
               </Text>
-              <AlertText className="text-typography-900" size="sm">
+              <AlertText className="text-typography-0" size="sm">
                 Simply scan a FileBridge QR code to securely access the files
               </AlertText>
             </VStack>

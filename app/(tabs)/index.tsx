@@ -16,6 +16,7 @@ import { VStack } from "@/components/ui/vstack";
 import { openFolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { addFolder, clearFolders } from "@/redux/slice/foldersSlice";
 import { getFileIconByMimeType } from "@/utils/iconExtension";
+import { openDocument } from "@/utils/openDocument";
 import { format } from "date-fns";
 import { ChevronDown, ChevronUp, Equal, QrCode } from "lucide-react-native";
 import React from "react";
@@ -54,86 +55,95 @@ export default function Index() {
           type="multiple"
           defaultValue={["item-0", "item-1", "item-2"]}
         >
-          {foldersData.reverse().slice(0, 3).map((folder, index) => (
-            <React.Fragment key={index}>
-              <AccordionItem value={`item-${index}`} className="rounded-lg">
-                <AccordionHeader>
-                  <AccordionTrigger>
-                    {({ isExpanded }) => {
-                      return (
-                        <>
-                          <VStack>
-                            <AccordionTitleText>
-                              {folder.subject}
-                            </AccordionTitleText>
-                            <AccordionTitleText
-                              style={{
-                                fontWeight: "light",
-                                fontSize: 12,
-                              }}
-                            >
-                              {`${format(
-                                new Date(folder.created_at),
-                                "dd/MM/yyyy"
-                              )} | ${folder.file_count - 1} items`}
-                            </AccordionTitleText>
-                          </VStack>
-                          {isExpanded ? (
-                            <AccordionIcon as={ChevronUp} />
-                          ) : (
-                            <AccordionIcon as={ChevronDown} />
-                          )}
-                        </>
-                      );
-                    }}
-                  </AccordionTrigger>
-                </AccordionHeader>
-                <AccordionContent style={styles.gridContainer}>
-                  <View style={styles.cardContainer}>
-                    <Card size="lg" variant="ghost" style={styles.card}>
-                      <Pressable
-                        onPress={() =>
-                          dispatch(
-                            openFolderQRModal({
-                              subject: folder.subject,
-                              qrcode_url: folder.qrcode_url,
-                            })
-                          )
-                        }
-                      >
-                        <QrCode color={"#535252"} size={26} />
-                      </Pressable>
-                      <Text
-                        numberOfLines={2}
-                        ellipsizeMode="tail"
-                        style={styles.text}
-                      >
-                        QR Code
-                      </Text>
-                    </Card>
-                  </View>
+          {foldersData
+            .reverse()
+            .slice(0, 3)
+            .map((folder, index) => (
+              <React.Fragment key={index}>
+                <AccordionItem value={`item-${index}`} className="rounded-lg">
+                  <AccordionHeader>
+                    <AccordionTrigger>
+                      {({ isExpanded }) => {
+                        return (
+                          <>
+                            <VStack>
+                              <AccordionTitleText>
+                                {folder.subject}
+                              </AccordionTitleText>
+                              <AccordionTitleText
+                                style={{
+                                  fontWeight: "light",
+                                  fontSize: 12,
+                                }}
+                              >
+                                {`${format(
+                                  new Date(folder.created_at),
+                                  "dd/MM/yyyy"
+                                )} | ${folder.file_count - 1} items`}
+                              </AccordionTitleText>
+                            </VStack>
+                            {isExpanded ? (
+                              <AccordionIcon as={ChevronUp} />
+                            ) : (
+                              <AccordionIcon as={ChevronDown} />
+                            )}
+                          </>
+                        );
+                      }}
+                    </AccordionTrigger>
+                  </AccordionHeader>
+                  <AccordionContent style={styles.gridContainer}>
+                    <View style={styles.cardContainer}>
+                      <Card size="lg" variant="ghost" style={styles.card}>
+                        <Pressable
+                          onPress={() =>
+                            dispatch(
+                              openFolderQRModal({
+                                subject: folder.subject,
+                                qrcode_url: folder.qrcode_url,
+                              })
+                            )
+                          }
+                        >
+                          <QrCode color={"#535252"} size={22} />
+                        </Pressable>
+                        <Text
+                          numberOfLines={2}
+                          ellipsizeMode="tail"
+                          style={styles.text}
+                        >
+                          QR Code
+                        </Text>
+                      </Card>
+                    </View>
 
-                  {folder.files
-                    .filter((file) => file.name != `${folder.id}/qrcode.png`)
-                    .map((file) => (
-                      <View key={file.id} style={styles.cardContainer}>
-                        <Card size="lg" variant="ghost" style={styles.card}>
-                          {getFileIconByMimeType(file.mime_type || "", 26)}
-                          <Text
-                            numberOfLines={2}
-                            ellipsizeMode="middle"
-                            style={styles.text}
-                          >
-                            {file.name.replace(`${folder.id}/`, "")}
-                          </Text>
-                        </Card>
-                      </View>
-                    ))}
-                </AccordionContent>
-              </AccordionItem>
-              <Divider className="my-4" />
-            </React.Fragment>
-          ))}
+                    {folder.files
+                      .filter((file) => file.name != `${folder.id}/qrcode.png`)
+                      .map((file) => (
+                        <Pressable
+                          key={file.id}
+                          style={styles.cardContainer}
+                          onPress={() =>
+                            openDocument(file.url, file.mime_type || "")
+                          }
+                        >
+                          <Card size="lg" variant="ghost" style={styles.card}>
+                            {getFileIconByMimeType(file.mime_type || "", 22)}
+                            <Text
+                              numberOfLines={2}
+                              ellipsizeMode="middle"
+                              style={styles.text}
+                            >
+                              {file.name.replace(`${folder.id}/`, "")}
+                            </Text>
+                          </Card>
+                        </Pressable>
+                      ))}
+                  </AccordionContent>
+                </AccordionItem>
+                <Divider className="my-4" />
+              </React.Fragment>
+            ))}
         </Accordion>
       </View>
     </ParallaxScrollView>
@@ -163,6 +173,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    fontSize: 12,
+    fontSize: 11,
   },
 });

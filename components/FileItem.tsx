@@ -15,6 +15,7 @@ import Reanimated, {
 import { Trash } from "lucide-react-native";
 import { useDispatch } from "react-redux";
 import { openDeleteFileModal } from "@/redux/slice/deleteFileModalSlice";
+import { openDocument } from "@/utils/openDocument";
 
 const SwipeableRightAction = (
   prog: SharedValue<number>,
@@ -63,34 +64,32 @@ export const FileItem = ({
   folder,
   folder_subject,
   name,
+  url,
   mime_type,
   size_kb,
   created_at,
   id,
   can_delete = true,
-}: Omit<FileType, "user" | "url"> & {
+}: Omit<FileType, "user"> & {
   folder_subject: FolderType["subject"];
   can_delete?: boolean;
 }) => {
   const content = (
-    <HStack className="flex w-full gap-4 items-center py-2">
-      {getFileIconByMimeType(mime_type || "", 26)}
-      <VStack className="flex-1">
-        <Text
-          className="font-medium text-black"
-          size="md"
-          numberOfLines={2}
-          ellipsizeMode="middle"
-        >
-          {name}
-        </Text>
-        <HStack space="sm">
-          <Text>{format(new Date(created_at), "dd/MM/yyyy")}</Text>
-          <Text>|</Text>
-          <Text>{formatkB(size_kb || 0)}</Text>
-        </HStack>
-      </VStack>
-    </HStack>
+    <Pressable onPress={() => openDocument(url, mime_type || "")}>
+      <HStack className="flex w-full gap-4 items-center py-2">
+        {getFileIconByMimeType(mime_type || "", 26)}
+        <VStack className="flex-1">
+          <Text size="md" className="font-medium" numberOfLines={2} ellipsizeMode="middle">
+            {name}
+          </Text>
+          <HStack space="sm">
+            <Text>{format(new Date(created_at), "dd/MM/yyyy")}</Text>
+            <Text>|</Text>
+            <Text>{formatkB(size_kb || 0)}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
+    </Pressable>
   );
 
   if (can_delete) {

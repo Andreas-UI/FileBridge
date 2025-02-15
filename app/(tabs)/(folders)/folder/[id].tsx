@@ -76,11 +76,11 @@ export default function Index() {
             renderItem={({ item }) => (
               <FileItem
                 id={item.id}
-
                 // TODO:: Data identity to be fixed
                 folder={data?.id || 0}
                 folder_subject={data?.subject || ""}
                 name={item.name.replace(`${id}/`, "")}
+                url={item.url}
                 mime_type={item.mime_type}
                 size_kb={item.size_kb}
                 created_at={item.created_at}

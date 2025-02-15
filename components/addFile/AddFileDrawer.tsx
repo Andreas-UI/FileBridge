@@ -159,6 +159,7 @@ export const AddFileDrawer = () => {
         <DrawerFooter className="gap-6">
           <Button
             isDisabled={isLoading}
+            action="secondary"
             variant="outline"
             onPress={() => {
               dispatch(closeAddFileDrawer());

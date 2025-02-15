@@ -8,7 +8,17 @@ export default function ProfileLayout() {
         options={{
           headerShown: true,
           headerTitleAlign: "center",
-          title: "FileBridge",
+          headerShadowVisible: false,
+          title: "Profile",
+        }}
+      />
+      <Stack.Screen
+        name="theme"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerShadowVisible: false,
+          title: "Theme",
         }}
       />
     </Stack>

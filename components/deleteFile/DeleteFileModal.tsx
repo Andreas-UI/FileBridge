@@ -1,11 +1,9 @@
 import { Button, ButtonSpinner, ButtonText } from "../ui/button";
-import { CloseIcon, Icon } from "../ui/icon";
 import { Text } from "../ui/text";
 import {
   Modal,
   ModalBackdrop,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -67,6 +65,7 @@ export const DeleteFileModal = () => {
         <ModalFooter>
           <Button
             variant="outline"
+            action="secondary"
             className="flex-1"
             disabled={isLoading}
             onPress={() => {

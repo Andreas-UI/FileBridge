@@ -18,7 +18,7 @@ export const FolderSummaryCard = ({
 }) => {
   const dispatch = useDispatch();
   return (
-    <Card size="md" variant="outline" className="bg-background-950 p-6">
+    <Card size="md" variant="outline" className="bg-primary-500 p-6">
       <VStack>
         <HStack className="items-center">
           <VStack className="flex-1">
@@ -29,7 +29,7 @@ export const FolderSummaryCard = ({
               <Heading size="xl" className="text-typography-50">
                 3 Users Scanned
               </Heading>
-              <Text className="font-normal text-typography-400" size="sm">
+              <Text className="font-normal text-typography-50" size="sm">
                 Last Accessed: 05 Jan 2025
               </Text>
             </VStack>

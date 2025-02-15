@@ -12,8 +12,8 @@ export const BrandCard = () => {
         height: 215,
         overflow: "hidden",
         borderRadius: 16,
-        borderColor: "#1C2022",
       }}
+      className="border-primary-500"
     >
       <Image
         source={require("../assets/images/sea-bridge-1.jpg")}
@@ -29,10 +29,9 @@ export const BrandCard = () => {
           width: 160,
           height: 160,
           borderBottomLeftRadius: 160,
-          backgroundColor: "black",
-          opacity: 0.7,
           zIndex: 40,
         }}
+        className="bg-primary-500 opacity-70"
       />
       <View
         style={{
@@ -55,10 +54,9 @@ export const BrandCard = () => {
           width: 260,
           height: 260,
           borderBottomLeftRadius: 260,
-          backgroundColor: "black",
-          opacity: 0.7,
           zIndex: 20,
         }}
+        className="bg-primary-500 opacity-70"
       />
       <View
         style={{

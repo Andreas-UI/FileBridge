@@ -16,7 +16,7 @@ import { VStack } from "@/components/ui/vstack";
 import { openFolderQRModal } from "@/redux/slice/folderQrModalSlice";
 import { addFolder, clearFolders } from "@/redux/slice/foldersSlice";
 import { getFileIconByMimeType } from "@/utils/iconExtension";
-import { openDocument } from "@/utils/openDocument";
+import { openFile } from "@/utils/openFile";
 import { format } from "date-fns";
 import { ChevronDown, ChevronUp, Equal, QrCode } from "lucide-react-native";
 import React from "react";
@@ -124,7 +124,7 @@ export default function Index() {
                           key={file.id}
                           style={styles.cardContainer}
                           onPress={() =>
-                            openDocument(file.url, file.mime_type || "")
+                            openFile(file.url, file.mime_type || "")
                           }
                         >
                           <Card size="lg" variant="ghost" style={styles.card}>

@@ -15,7 +15,7 @@ import Reanimated, {
 import { Trash } from "lucide-react-native";
 import { useDispatch } from "react-redux";
 import { openDeleteFileModal } from "@/redux/slice/deleteFileModalSlice";
-import { openDocument } from "@/utils/openDocument";
+import { openFile } from "@/utils/openFile";
 
 const SwipeableRightAction = (
   prog: SharedValue<number>,
@@ -75,11 +75,16 @@ export const FileItem = ({
   can_delete?: boolean;
 }) => {
   const content = (
-    <Pressable onPress={() => openDocument(url, mime_type || "")}>
+    <Pressable onPress={() => openFile(url, mime_type || "")}>
       <HStack className="flex w-full gap-4 items-center py-2">
         {getFileIconByMimeType(mime_type || "", 26)}
         <VStack className="flex-1">
-          <Text size="md" className="font-medium" numberOfLines={2} ellipsizeMode="middle">
+          <Text
+            size="md"
+            className="font-medium"
+            numberOfLines={2}
+            ellipsizeMode="middle"
+          >
             {name}
           </Text>
           <HStack space="sm">

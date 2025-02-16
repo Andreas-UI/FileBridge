@@ -1,7 +1,7 @@
 import { Linking, Platform } from "react-native";
 import { IntentLauncherResult, startActivityAsync } from "expo-intent-launcher";
 
-export const openDocument = async (url: string, mime_type: string) => {
+export const openFile = async (url: string, mime_type: string) => {
   if (Platform.OS === "android") {
     try {
       await startActivityAsync("android.intent.action.VIEW", {

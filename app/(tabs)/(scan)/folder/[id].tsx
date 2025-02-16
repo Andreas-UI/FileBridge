@@ -6,11 +6,10 @@ import { Heading } from "@/components/ui/heading";
 import React from "react";
 import { FlashList } from "@shopify/flash-list";
 import { FileItem } from "@/components/FileItem";
-import { AddFileFAB } from "@/components/addFile/AddFileFAB";
 import { useFindByIdFolder } from "@/api/folder";
-import { FolderSummaryCard } from "@/components/folderSummary/FolderSummaryCard";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react-native";
+import { DownloadAllButton } from "@/components/DownloadAllButton";
 
 export default function Index() {
   const { id } = useLocalSearchParams();
@@ -74,6 +73,7 @@ export default function Index() {
                 id={item.id}
                 // TODO:: Data identity to be fixed
                 folder={data?.id || 0}
+                url={item.url}
                 folder_subject={data?.subject || ""}
                 name={item.name.replace(`${id}/`, "")}
                 mime_type={item.mime_type}
@@ -86,6 +86,11 @@ export default function Index() {
           />
         </View>
       </View>
+      {data && (
+        <View style={styles.bottomView}>
+          <DownloadAllButton folder={data} />
+        </View>
+      )}
     </>
   );
 }
@@ -97,5 +102,11 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     paddingTop: 36,
     gap: 16,
+  },
+  bottomView: {
+    paddingHorizontal: 18,
+    paddingVertical: 24,
+    justifyContent: "center",
+    backgroundColor: "white",
   },
 });

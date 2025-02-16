@@ -75,7 +75,7 @@ export default function Index() {
         />
       </View>
       <View style={styles.bottomView}>
-        <Button size="xl" onPress={handleApplyTheme} disabled={themeApplied}>
+        <Button size="lg" onPress={handleApplyTheme} disabled={themeApplied}>
           <ButtonText>{themeApplied ? "Applied!" : "Apply Theme"}</ButtonText>
         </Button>
       </View>

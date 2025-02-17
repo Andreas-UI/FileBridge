@@ -30,7 +30,7 @@ import {
 import { RootState } from "@/redux/store";
 import { FlashList } from "@shopify/flash-list";
 import { Stack, useFocusEffect } from "expo-router";
-import { ChevronDownIcon, ListCheck, X } from "lucide-react-native";
+import { ChevronDownIcon, FolderOpen, ListCheck, X } from "lucide-react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -166,8 +166,19 @@ export default function Index() {
           </Select>
         </HStack>
         {isLoading && <Text>Loading...</Text>}
-        {foldersData.length < 0 ? (
-          <Text> No folders created. </Text>
+        {foldersData.length === 0 ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <FolderOpen size={48} color="#8c8c8c" />
+            <Text size="md" className="text-typography-500">
+              No folder. Create one to get started
+            </Text>
+          </View>
         ) : (
           <FlashList
             data={foldersData}

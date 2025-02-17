@@ -1,3 +1,4 @@
+import { logOut } from "@/api/access";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
@@ -20,6 +21,11 @@ import { Pressable } from "react-native-gesture-handler";
 
 export default function Index() {
   const router = useRouter();
+
+  const handleLogOut = async () => {
+    await logOut().then(() => router.replace("/onboarding"));
+  };
+
   return (
     <View style={styles.view} className="bg-background-0">
       <VStack space="sm">
@@ -107,12 +113,14 @@ export default function Index() {
       </VStack>
       <Divider />
       <VStack space="sm">
-        <HStack className="justify-between items-center">
-          <HStack className="items-center" space="md">
-            <LogOut color="#535252" size={24} />
-            <Text size="lg">Logout</Text>
+        <Pressable onPress={handleLogOut}>
+          <HStack className="justify-between items-center">
+            <HStack className="items-center" space="md">
+              <LogOut color="#535252" size={24} />
+              <Text size="lg">Log out</Text>
+            </HStack>
           </HStack>
-        </HStack>
+        </Pressable>
       </VStack>
     </View>
   );

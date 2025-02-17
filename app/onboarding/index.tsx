@@ -1,5 +1,6 @@
 import { Button, ButtonText } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
 import React from "react";
@@ -11,7 +12,8 @@ const { width, height } = Dimensions.get("window");
 export default function OnboardingScreen() {
   const router = useRouter();
 
-  const handlePostOnboarding = () => {
+  const handlePostOnboarding = async () => {
+    await AsyncStorage.setItem("hasOnboarded", "1")
     router.replace("/auth");
   };
 

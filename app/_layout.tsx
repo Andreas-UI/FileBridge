@@ -10,6 +10,7 @@ import { verifyInstallation } from "nativewind";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
+import { userExist } from "@/api/access";
 
 const queryClient = new QueryClient();
 
@@ -22,12 +23,15 @@ export default function RootLayout() {
   useEffect(() => {
     const checkOnboarding = async () => {
       const hasOnboarded = await AsyncStorage.getItem("hasOnboarded");
+      const user = await userExist();
       if (!hasOnboarded) {
-        // router.replace("/onboarding");
-        router.replace("/(tabs)");
+        router.replace("/onboarding"); // Start from onboarding if not completed
+      } else if (!user) {
+        router.replace("/onboarding"); // If onboarding is done but user is not authenticated, go to auth
+      } else {
+        router.replace("/(tabs)"); // If authenticated, go to tabs
       }
     };
-
     checkOnboarding();
   }, []);
 
@@ -37,7 +41,7 @@ export default function RootLayout() {
         <GluestackUIProvider>
           <GestureHandlerRootView>
             <Provider store={store}>
-              <Stack>
+              <Stack initialRouteName="onboarding/index">
                 <Stack.Screen
                   name="onboarding/index"
                   options={{
